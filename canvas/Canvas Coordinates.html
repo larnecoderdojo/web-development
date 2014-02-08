@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0px;">
+
+<script>
+function getCoordinates(e) {
+  x = e.clientX;
+  y = e.clientY;
+  document.getElementById("xycoordinates").innerHTML = "Coordinates: (" + x + "," + y + ")";
+}
+
+function clearCoordinates() {
+  document.getElementById("xycoordinates").innerHTML = "";
+}
+</script>
+
+<div id="coordiv" style="float:left; width:500px; height:500px; border:1px solid black" onmousemove="getCoordinates(event)" onmouseout="clearCoordinates()"></div>
+<br/>
+<br/>
+<br/>
+<h1 id="xycoordinates"></h1>
+
+</body>
+</html>
