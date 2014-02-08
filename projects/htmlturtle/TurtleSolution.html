@@ -1,0 +1,74 @@
+<html>
+<head><script src="helperfunctions.js"></script></head>
+
+<body style="margin:20;">
+<!-- the canvas where we'll do all the drawing -->
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid black;"></canvas>
+<!-- a canvas used to draw the turtle icon, so it appears to move with the line -->
+<canvas id="turtleIconOverlay" width="500" height="500" style="position:absolute; left:20; top:20; z-index:999;"></canvas>
+
+<p>
+<select id="action">
+  <option value="move">move</option>
+  <option value="turn">turn</option>
+  <option value="width">width</option>
+  <option value="colour">colour</option>
+</select>
+<input id="value" type="text">
+<button id="submitButton" type="button" onclick="moveTurtle()">Submit</button>
+</p>
+
+<script>
+// get the canvas element
+var canvas = document.getElementById("myCanvas");
+
+// get the drawing context, we'll use this to do the drawing
+var ctx = canvas.getContext("2d");
+
+// move the turtle to the starting position
+ctx.translate(250, 250);
+
+// draw the turtle icon in the starting position
+drawTurtleIcon();
+
+function moveTurtle() {
+  // get the selected item from the dropdown list
+  var action = document.getElementById("action").value;
+  // get the value from the input field as a number
+  var valueAsNumber = parseInt(document.getElementById("value").value);
+  // get the value from the input field as text
+  var valueAsText = document.getElementById("value").value;
+  
+  if (action == "move") {
+    // move to the start point
+    ctx.moveTo(0, 0);
+    // create a line of length valueAsNumber
+    ctx.lineTo(0, valueAsNumber);
+    // draw the line
+    ctx.stroke();
+    // set the new starting position for drawing
+    ctx.translate(0, valueAsNumber); 
+    // move the turtle along the line
+    moveTurtleIcon(valueAsNumber);
+  } else if (action == "turn") {
+    // rotate the canvas valueAsNumber degrees
+    ctx.rotate(valueAsNumber * (Math.PI / 180));
+    // rotate the turtle icon to point in the new direction
+    rotateTurtleIcon(valueAsNumber);
+  } else if (action == "width") {
+    // start a new drawing path for the new width
+    ctx.beginPath();
+    // set the new line width
+    ctx.lineWidth = valueAsNumber;
+  } else if (action == "colour") {
+    // start a new drawing path for the new colour
+    ctx.beginPath();
+    // set the new line colour
+    ctx.strokeStyle = valueAsText;
+  }
+}
+
+</script>
+
+</body>
+</html>
